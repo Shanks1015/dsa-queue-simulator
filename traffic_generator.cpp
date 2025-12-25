@@ -12,8 +12,8 @@ int main() {
     int vehicleId = 1;
 
     while (true) {
-        char road = 'A' + rand() % 4;   // A, B, C, D
-        int lane = 1 + rand() % 3;      // 1, 2, 3
+        char road = 'A' + rand() % 4;   // Roads A, B, C, D
+        int lane = 1 + rand() % 3;      // Lanes 1, 2, 3
 
         string filename = "lane";
         filename += road;
@@ -23,13 +23,14 @@ int main() {
         file << vehicleId << " " << lane << endl;
         file.close();
 
-        cout << "Generated Vehicle " << vehicleId
-             << " on Road " << road
-             << " Lane " << lane << endl;
+        cout << "[GENERATOR] Vehicle " << vehicleId
+             << " -> Road " << road
+             << " Lane L" << lane << endl;
 
         vehicleId++;
 
-        this_thread::sleep_for(chrono::seconds(1));
+        // Random arrival time (1–3 sec)
+        this_thread::sleep_for(chrono::seconds(1 + rand() % 3));
     }
 
     return 0;
