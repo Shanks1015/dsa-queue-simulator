@@ -1,68 +1,85 @@
 #include <iostream>
-#include <queue>
 #include <fstream>
-#include <thread>
-#include <chrono>
+#include <unistd.h>
+#include "queue.h"
+
 using namespace std;
 
-struct Vehicle {
-    int id;
-    char road;
-    int lane;
-};
-queue<Vehicle> roadA, roadB, roadC, roadD;
+/* Lane Queues (only L2 lanes are controlled) */
+Queue AL2, BL2, CL2, DL2;
 
-void readLane(char road, queue<Vehicle>& q) {
+/* Read vehicles from file */
+void readLane(char road, Queue &q) {
     string filename = "lane";
     filename += road;
     filename += ".txt";
 
-    ifstream file(filename);
+    ifstream file(filename.c_str());
     int id, lane;
 
     while (file >> id >> lane) {
-        Vehicle v = {id, road, lane};
-        q.push(v);
+        if (lane == 2) {
+            Vehicle v = {id};
+            enqueue(q, v);
+        }
     }
-
     file.close();
-    ofstream clearFile(filename, ios::trunc);
+
+    ofstream clearFile(filename.c_str(), ios::trunc);
     clearFile.close();
 }
-void serve(queue<Vehicle>& q, char road) {
-    if (!q.empty()) {
-        cout << "Road " << road
-             << " serving Vehicle " << q.front().id << endl;
-        q.pop();
+
+/* Serve vehicles */
+void serve(Queue &q, char road, int count) {
+    for (int i = 0; i < count && !isEmpty(q); i++) {
+        Vehicle v = dequeue(q);
+        cout << "[GREEN] Road " << road
+             << " serving Vehicle " << v.id << endl;
+        sleep(1);
     }
 }
-bool isPriority(queue<Vehicle>& q) {
-    return q.size() > 10;
-}
-int main() {
-    while (true) {
-        readLane('A', roadA);
-        readLane('B', roadB);
-        readLane('C', roadC);
-        readLane('D', roadD);
 
-        // Priority condition for AL2
-        if (isPriority(roadA)) {
-            cout << "PRIORITY MODE: Road A\n";
-            while (roadA.size() > 5) {
-                serve(roadA, 'A');
-                this_thread::sleep_for(chrono::seconds(1));
+int main() {
+    initQueue(AL2);
+    initQueue(BL2);
+    initQueue(CL2);
+    initQueue(DL2);
+
+    while (true) {
+        readLane('A', AL2);
+        readLane('B', BL2);
+        readLane('C', CL2);
+        readLane('D', DL2);
+
+        cout << "\n===== TRAFFIC CYCLE START =====\n";
+
+        /* PRIORITY CONDITION */
+        if (size(AL2) > 10) {
+            cout << "[PRIORITY] AL2 ACTIVE\n";
+            while (size(AL2) > 5) {
+                serve(AL2, 'A', 1);
             }
         }
+        else {
+            /* NORMAL CONDITION */
+            int total = size(BL2) + size(CL2) + size(DL2);
+            int V = total / 3;
+            if (V == 0) V = 1;
 
-        // Normal condition (round robin)
-        serve(roadA, 'A');
-        serve(roadB, 'B');
-        serve(roadC, 'C');
-        serve(roadD, 'D');
+            cout << "[NORMAL] Vehicles per lane = " << V << endl;
 
-        cout << "---------------------\n";
-        this_thread::sleep_for(chrono::seconds(2));
+            cout << "Light GREEN -> Road B\n";
+            serve(BL2, 'B', V);
+
+            cout << "Light GREEN -> Road C\n";
+            serve(CL2, 'C', V);
+
+            cout << "Light GREEN -> Road D\n";
+            serve(DL2, 'D', V);
+        }
+
+        cout << "===== TRAFFIC CYCLE END =====\n";
+        sleep(2);
     }
 
     return 0;
