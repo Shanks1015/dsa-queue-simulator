@@ -3,14 +3,17 @@
 using namespace std;
 
 int main() {
-    queue<int> q;
+    queue<int> AL1, AL2, AL3;
 
-    q.push(10);
-    q.push(20);
-    q.push(30);
+    // manually add some vehicles for testing
+    AL1.push(1);
+    AL2.push(2);
+    AL2.push(3);
+    AL3.push(4);
 
-    while (!q.empty()) {
-        cout << q.front() << " ";
-        q.pop();
-    }
+    cout << "AL1 front: " << AL1.front() << endl;
+    cout << "AL2 front: " << AL2.front() << endl;
+    cout << "AL3 front: " << AL3.front() << endl;
+
+    return 0;
 }

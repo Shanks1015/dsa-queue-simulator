@@ -1,0 +1,16 @@
+# Executables
+*.exe
+
+# Object and debug files
+*.obj
+*.ilk
+*.pdb
+
+# Runtime generated files
+laneA.txt
+laneB.txt
+laneC.txt
+laneD.txt
+
+# Windows specific
+vc140.pdb
