@@ -6,7 +6,7 @@ void initQueue(Queue &q) {
 }
 
 int isEmpty(Queue &q) {
-    return q.rear < q.front;
+    return q.front > q.rear;
 }
 
 int isFull(Queue &q) {
@@ -20,7 +20,7 @@ void enqueue(Queue &q, Vehicle v) {
 }
 
 Vehicle dequeue(Queue &q) {
-    Vehicle v = {-1};
+    Vehicle v = {-1, 'X', -1};
     if (!isEmpty(q)) {
         v = q.data[q.front++];
     }

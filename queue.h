@@ -5,6 +5,8 @@
 
 struct Vehicle {
     int id;
+    char road;
+    int lane;
 };
 
 struct Queue {

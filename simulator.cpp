@@ -1,85 +1,59 @@
 #include <iostream>
 #include <fstream>
-#include <unistd.h>
+#include <thread>
+#include <chrono>
 #include "queue.h"
 
 using namespace std;
 
-/* Lane Queues (only L2 lanes are controlled) */
-Queue AL2, BL2, CL2, DL2;
-
-/* Read vehicles from file */
-void readLane(char road, Queue &q) {
-    string filename = "lane";
-    filename += road;
-    filename += ".txt";
-
-    ifstream file(filename.c_str());
-    int id, lane;
-
-    while (file >> id >> lane) {
-        if (lane == 2) {
-            Vehicle v = {id};
-            enqueue(q, v);
-        }
-    }
-    file.close();
-
-    ofstream clearFile(filename.c_str(), ios::trunc);
-    clearFile.close();
-}
-
-/* Serve vehicles */
-void serve(Queue &q, char road, int count) {
-    for (int i = 0; i < count && !isEmpty(q); i++) {
-        Vehicle v = dequeue(q);
-        cout << "[GREEN] Road " << road
-             << " serving Vehicle " << v.id << endl;
-        sleep(1);
-    }
-}
-
 int main() {
+
+    // Queues for Road A lanes
+    Queue AL1, AL2, AL3;
+    initQueue(AL1);
     initQueue(AL2);
-    initQueue(BL2);
-    initQueue(CL2);
-    initQueue(DL2);
+    initQueue(AL3);
 
     while (true) {
-        readLane('A', AL2);
-        readLane('B', BL2);
-        readLane('C', CL2);
-        readLane('D', DL2);
+        ifstream file("laneA.txt");
+        int id, lane;
+        char road;
 
-        cout << "\n===== TRAFFIC CYCLE START =====\n";
+        while (file >> id >> road >> lane) {
+            Vehicle v = {id, road, lane};
 
-        /* PRIORITY CONDITION */
+            if (lane == 1) enqueue(AL1, v);
+            else if (lane == 2) enqueue(AL2, v);
+            else enqueue(AL3, v);
+        }
+        file.close();
+
+        // Clear file after reading
+        ofstream clearFile("laneA.txt", ios::trunc);
+        clearFile.close();
+
+        // 🔴 PRIORITY LANE LOGIC (AL2)
         if (size(AL2) > 10) {
-            cout << "[PRIORITY] AL2 ACTIVE\n";
+            cout << "[PRIORITY] Serving AL2" << endl;
             while (size(AL2) > 5) {
-                serve(AL2, 'A', 1);
+                Vehicle v = dequeue(AL2);
+                cout << "Serving Vehicle " << v.id << " (AL2)" << endl;
+                this_thread::sleep_for(chrono::seconds(1));
             }
         }
-        else {
-            /* NORMAL CONDITION */
-            int total = size(BL2) + size(CL2) + size(DL2);
-            int V = total / 3;
-            if (V == 0) V = 1;
 
-            cout << "[NORMAL] Vehicles per lane = " << V << endl;
-
-            cout << "Light GREEN -> Road B\n";
-            serve(BL2, 'B', V);
-
-            cout << "Light GREEN -> Road C\n";
-            serve(CL2, 'C', V);
-
-            cout << "Light GREEN -> Road D\n";
-            serve(DL2, 'D', V);
+        // Normal serving
+        if (!isEmpty(AL1)) {
+            Vehicle v = dequeue(AL1);
+            cout << "Serving Vehicle " << v.id << " from AL1" << endl;
         }
 
-        cout << "===== TRAFFIC CYCLE END =====\n";
-        sleep(2);
+        if (!isEmpty(AL3)) {
+            Vehicle v = dequeue(AL3);
+            cout << "Serving Vehicle " << v.id << " from AL3" << endl;
+        }
+
+        this_thread::sleep_for(chrono::seconds(2));
     }
 
     return 0;
