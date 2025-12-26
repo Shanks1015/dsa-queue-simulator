@@ -38,7 +38,7 @@ int main() {
             while (size(AL2) > 5) {
                 Vehicle v = dequeue(AL2);
                 cout << "Serving Vehicle " << v.id << " (AL2)" << endl;
-                this_thread::sleep_for(chrono::seconds(1));
+                std::this_thread::sleep_for(chrono::seconds(1));
             }
         }
 
@@ -53,7 +53,7 @@ int main() {
             cout << "Serving Vehicle " << v.id << " from AL3" << endl;
         }
 
-        this_thread::sleep_for(chrono::seconds(2));
+        std::this_thread::sleep_for(chrono::seconds(2));
     }
 
     return 0;
