@@ -32,7 +32,7 @@ int main() {
         ofstream clearFile("laneA.txt", ios::trunc);
         clearFile.close();
 
-        // 🔴 PRIORITY LANE LOGIC (AL2)
+        //  PRIORITY LANE LOGIC (AL2)
         if (size(AL2) > 10) {
             cout << "[PRIORITY] Serving AL2" << endl;
             while (size(AL2) > 5) {

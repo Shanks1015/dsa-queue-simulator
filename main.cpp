@@ -5,7 +5,7 @@ using namespace std;
 int main() {
     queue<int> AL1, AL2, AL3;
 
-    // manually add some vehicles for testing
+   
     AL1.push(1);
     AL2.push(2);
     AL2.push(3);
