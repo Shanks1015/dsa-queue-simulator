@@ -1,53 +1,66 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
-#include <thread>
-#include <chrono>
 #include "queue.h"
-
 using namespace std;
 
-int main() {
-    Queue AL1, AL2, AL3;
-    initQueue(AL1);
-    initQueue(AL2);
-    initQueue(AL3);
+// All 12 lane queues (4 roads × 3 lanes)
+Queue AL1, AL2, AL3;  // Road A lanes
+Queue BL1, BL2, BL3;  // Road B lanes
+Queue CL1, CL2, CL3;  // Road C lanes
+Queue DL1, DL2, DL3;  // Road D lanes
 
-    while (true) {
-        ifstream file("laneA.txt");
+// Initialize all queues
+void initAllQueues() {
+    initQueue(AL1); initQueue(AL2); initQueue(AL3);
+    initQueue(BL1); initQueue(BL2); initQueue(BL3);
+    initQueue(CL1); initQueue(CL2); initQueue(CL3);
+    initQueue(DL1); initQueue(DL2); initQueue(DL3);
+}
+
+// Get queue by road and lane
+Queue& getQueue(char road, int lane) {
+    if (road == 'A') {
+        if (lane == 1) return AL1;
+        if (lane == 2) return AL2;
+        return AL3;
+    } else if (road == 'B') {
+        if (lane == 1) return BL1;
+        if (lane == 2) return BL2;
+        return BL3;
+    } else if (road == 'C') {
+        if (lane == 1) return CL1;
+        if (lane == 2) return CL2;
+        return CL3;
+    } else {
+        if (lane == 1) return DL1;
+        if (lane == 2) return DL2;
+        return DL3;
+    }
+}
+
+// Load vehicles from files
+void loadVehiclesFromFiles() {
+    const char roads[] = {'A', 'B', 'C', 'D'};
+    
+    for (char road : roads) {
+        string filename = "lane";
+        filename += road;
+        filename += ".txt";
+        
+        ifstream file(filename);
+        if (!file.is_open()) continue;
+        
         int id, lane;
-        char road;
-
-        while (file >> id >> road >> lane) {
-            Vehicle v = {id, road, lane};
-            if (lane == 1) enqueue(AL1, v);
-            else if (lane == 2) enqueue(AL2, v);
-            else enqueue(AL3, v);
+        char r;
+        while (file >> id >> r >> lane) {
+            Vehicle v = {id, r, lane};
+            Queue& q = getQueue(r, lane);
+            enqueue(q, v);
         }
         file.close();
-
-        ofstream clear("laneA.txt", ios::trunc);
+        
+        // Clear file after loading
+        ofstream clear(filename, ios::trunc);
         clear.close();
-
-        // PRIORITY LANE (AL2)
-        if (size(AL2) > 10) {
-            cout << "[PRIORITY] Serving AL2\n";
-            while (size(AL2) > 5) {
-                Vehicle v = dequeue(AL2);
-                cout << "Serving Vehicle " << v.id << " (AL2)\n";
-                this_thread::sleep_for(chrono::seconds(1));
-            }
-        }
-
-        if (!isEmpty(AL1)) {
-            Vehicle v = dequeue(AL1);
-            cout << "Serving Vehicle " << v.id << " (AL1)\n";
-        }
-
-        if (!isEmpty(AL3)) {
-            Vehicle v = dequeue(AL3);
-            cout << "Serving Vehicle " << v.id << " (AL3)\n";
-        }
-
-        this_thread::sleep_for(chrono::seconds(2));
     }
 }
