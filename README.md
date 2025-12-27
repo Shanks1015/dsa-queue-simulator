@@ -6,6 +6,7 @@
 **Date:** DEC 2025
 
 ---
+* [Read Full Technical Report](./REPORT.md)
 
 ## Summary of Work
 This project simulates a central traffic junction where four major roads (A, B, C, D) meet. The system is designed to manage 12 lanes using a custom **Queue** data structure. 
