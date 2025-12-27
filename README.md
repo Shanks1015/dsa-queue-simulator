@@ -1,4 +1,4 @@
-# 🚦 Traffic Junction Simulator
+# Traffic Junction Simulator
 **Data Structures & Algorithms (COMP202) | Assignment #1**
 
 **Submitted by:** Aayush Acharya  
@@ -7,24 +7,28 @@
 
 ---
 
-## 👋 Summary of Work
+## Summary of Work
 This project simulates a central traffic junction where four major roads (A, B, C, D) meet. The system is designed to manage 12 lanes using a custom **Queue** data structure. 
 
 The simulator handles two primary modes:
 * **Normal Condition:** Vehicles are served fairly based on the average occupancy of waiting lanes.
 * **High-Priority Condition:** If the priority lane (**AL2**) accumulates more than 10 vehicles, it is prioritized until the count drops below 5.
 
-## 🎥 Simulation Demo
-> [Click here to watch the Simulation Video](./assets/DSA.mp4)
+## Simulation Demo
+The simulation video is available in the repository. Due to file size, GitHub may not play it directly in the browser.
+
+[**Click here to Download/View the Simulation Video (DSA.mp4)**](./assets/DSA.mp4)
+
+*This video demonstrates the SDL3 interface, the traffic generation logic, and the priority handling for lane AL2.*
 
 ---
 
-## 🛠️ System Objectives
+## System Objectives
 * Implement a linear data structure to solve a real-world traffic problem.
 * Visualize the queue management system using SDL3.
 * Establish communication between a `traffic_generator` and a `simulator` via file sharing.
 
-## 📊 Data Structure Table
+## Data Structure Table
 | Data Structure | Implementation | Purpose |
 | :--- | :--- | :--- |
 | **Vehicle Queue** | Circular Array | Maintains the list of vehicles waiting in each of the 12 lanes. |
