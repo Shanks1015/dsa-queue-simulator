@@ -1,4 +1,4 @@
-# 📄 Technical Report: Traffic Junction Simulation
+# Technical Report: Traffic Junction Simulation
 **Student:** Aayush Acharya  
 **Roll No:** 01  
 **Subject:** Data Structures & Algorithms (COMP202)
