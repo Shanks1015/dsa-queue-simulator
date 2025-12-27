@@ -1,16 +1,25 @@
-# Executables
 *.exe
+*.out
+main
+traffic_simulator
+src/*.exe
 
-# Object and debug files
-*.obj
-*.ilk
-*.pdb
+# Object files
+*.o
 
-# Runtime generated files
-laneA.txt
-laneB.txt
-laneC.txt
-laneD.txt
+# Lane data files (auto-generated)
+src/lane_*.txt
+lane_*.txt
 
-# Windows specific
-vc140.pdb
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Build directory
+build/
+bin/
