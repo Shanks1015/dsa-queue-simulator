@@ -16,8 +16,8 @@ struct Queue {
 };
 
 void initQueue(Queue &q);
-int isEmpty(Queue &q);
-int isFull(Queue &q);
+bool isEmpty(Queue &q);
+bool isFull(Queue &q);
 void enqueue(Queue &q, Vehicle v);
 Vehicle dequeue(Queue &q);
 int size(Queue &q);

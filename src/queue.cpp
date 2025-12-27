@@ -5,11 +5,11 @@ void initQueue(Queue &q) {
     q.rear = -1;
 }
 
-int isEmpty(Queue &q) {
-    return q.front > q.rear;
+bool isEmpty(Queue &q) {
+    return q.rear < q.front;
 }
 
-int isFull(Queue &q) {
+bool isFull(Queue &q) {
     return q.rear == MAX - 1;
 }
 
@@ -20,11 +20,7 @@ void enqueue(Queue &q, Vehicle v) {
 }
 
 Vehicle dequeue(Queue &q) {
-    Vehicle v = {-1, 'X', -1};
-    if (!isEmpty(q)) {
-        v = q.data[q.front++];
-    }
-    return v;
+    return q.data[q.front++];
 }
 
 int size(Queue &q) {

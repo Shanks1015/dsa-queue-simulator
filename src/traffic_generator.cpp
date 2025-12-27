@@ -5,6 +5,7 @@
 #include <thread>
 #include <chrono>
 
+
 using namespace std;
 
 int main() {
@@ -12,28 +13,23 @@ int main() {
     int vehicleId = 1;
 
     while (true) {
-        char road = 'A' + rand() % 4;   // A, B, C, D
-        int lane = 1 + rand() % 3;      // 1, 2, 3
+        char road = 'A' + rand() % 4;
+        int lane = 1 + rand() % 3;
 
-        string filename = "lane";
-        filename += road;
-        filename += ".txt";
+        string file = "lane";
+        file += road;
+        file += ".txt";
 
-        ofstream file(filename, ios::app);
-        if (file.is_open()) {
-            file << vehicleId << " " << road << " " << lane << endl;
-            file.close();
-        }
+        ofstream out(file, ios::app);
+        out << vehicleId << " " << road << " " << lane << endl;
+        out.close();
 
         cout << "[GEN] Vehicle " << vehicleId
              << " -> Road " << road
-             << " Lane L" << lane << endl;
+             << " Lane " << lane << endl;
 
         vehicleId++;
+        std::this_thread::sleep_for(std::chrono::seconds(1));
 
-        this_thread::sleep_for(chrono::seconds(1));
     }
-
-    return 0;
 }
-
