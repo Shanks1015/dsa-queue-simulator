@@ -1,48 +1,44 @@
+# 🚦 Traffic Junction Simulator
+**Data Structures & Algorithms (COMP202) | Assignment #1**
 
-# DSA Assignment 1 – Traffic Queue Simulator
-
-## Overview
-This project is a simulation of a traffic junction with four roads (A, B, C, D) and three lanes per road. Vehicles arrive randomly and are managed using **queue data structures**, following specific rules for normal and priority lanes. The simulation demonstrates **basic queue operations, priority handling, and file-based communication**.
-
----
-
-## Features
-
-- **Random Vehicle Generation**  
-  Vehicles are generated randomly for each road and lane using the `traffic_generator.cpp` program.  
-
-- **Queue-based Traffic Management**  
-  Each lane uses a custom queue structure to store vehicles waiting to pass the junction.
-
-- **Priority Lane Handling**  
-  Lane AL2 is a priority lane. If more than 10 vehicles are waiting, it is served first until the count drops below 5.
-
-- **File-based Communication**  
-  The generator writes vehicles to files (`laneA.txt`, `laneB.txt`, etc.), and the simulator reads these files to update queues.
-
-- **Simulator Logic**  
-  The simulator processes vehicles in a continuous loop, serving priority and normal lanes in FIFO order.
+**Submitted by:** Aayush Acharya  
+**Roll No:** 01  
+**Date:** Nov 2025
 
 ---
 
-## Project Structure
-dsa-queue-simulator/
-├── queue.h
-├── queue.cpp
-├── simulator.cpp
-├── traffic_generator.cpp
-├── .gitignore
-└── README.md
+## 👋 Summary of Work
+This project simulates a central traffic junction where four major roads (A, B, C, D) meet. The system is designed to manage 12 lanes using a custom **Queue** data structure. 
 
-- **queue.h / queue.cpp** : Implements a simple queue for storing vehicles.  
-- **simulator.cpp** : Reads vehicle data from files, handles queues, and simulates traffic light logic.  
-- **traffic_generator.cpp** : Generates random vehicles and writes them to lane files.  
-- **.gitignore** : Excludes generated lane files and executables from Git.  
+The simulator handles two primary modes:
+* **Normal Condition:** Vehicles are served fairly based on the average occupancy of waiting lanes.
+* **High-Priority Condition:** If the priority lane (**AL2**) accumulates more than 10 vehicles, it is prioritized until the count drops below 5.
+
+## 🎥 Simulation Demo
+> [Click here to watch the Simulation Video](./assets/DSA.mp4)
 
 ---
 
+## 🛠️ System Objectives
+* Implement a linear data structure to solve a real-world traffic problem.
+* Visualize the queue management system using SDL3.
+* Establish communication between a `traffic_generator` and a `simulator` via file sharing.
+
+## 📊 Data Structure Table
+| Data Structure | Implementation | Purpose |
+| :--- | :--- | :--- |
+| **Vehicle Queue** | Circular Array | Maintains the list of vehicles waiting in each of the 12 lanes. |
+| **Lane/Light Queue** | Priority Logic | Updates the serving order if AL2 exceeds the 10-vehicle threshold. |
+| **Vehicle Struct** | Custom Object | Stores unique Vehicle IDs, road labels, and lane numbers. |
 
 
 
+---
 
+## 🚀 Process to Run
+
+### 1. Compile the Program
+Open your terminal in the `src` directory and run:
+```bash
+g++ main.cpp queue.cpp -o main.exe -I"C:\SDLnew\SDL\SDL3-3.2.28\x86_64-w64-mingw32\include" -L"C:\SDLnew\SDL\SDL3-3.2.28\x86_64-w64-mingw32\lib" -lSDL3 -lmingw32 -mconsole
  
