@@ -3,7 +3,7 @@
 
 **Submitted by:** Aayush Acharya  
 **Roll No:** 01  
-**Date:** Nov 2025
+**Date:** DEC 2025
 
 ---
 
@@ -16,8 +16,7 @@ The simulator handles two primary modes:
 
 ## Simulation Demo
 The simulation video is available in the repository. Due to file size, GitHub may not play it directly in the browser.
-
-[**Click here to Download/View the Simulation Video (DSA.mp4)**](./assets/DSA.mp4)
+![Traffic Simulation Demo](./assets/dsa.gif)
 
 *This video demonstrates the SDL3 interface, the traffic generation logic, and the priority handling for lane AL2.*
 
@@ -38,8 +37,13 @@ The simulation video is available in the repository. Due to file size, GitHub ma
 
 
 ---
+---
 
-## 🚀 Process to Run
+##  Algorithm & Complexity
+* **Queue Operations:** Enqueue and Dequeue are **$O(1)$** as they use head/tail pointers in a circular array.
+* **Traffic Processing:** The simulator checks lanes in **$O(n)$** time, where $n$ is the number of lanes (12).
+* **Space Complexity:** **$O(N \times L)$**, where $N$ is the max queue size and $L$ is the number of lanes.
+## Process to Run
 
 ### 1. Compile the Program
 Open your terminal in the `src` directory and run:
