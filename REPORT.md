@@ -3,7 +3,7 @@
 **Roll No:** 01  
 **Subject:** Data Structures & Algorithms (COMP202)
 
----
+---Formal report pdf: REPORT.md
 
 ## 1. Executive Summary
 This project implements a real-time traffic management system for a 4-way junction using a **Circular Queue**. The system is built with C++ and SDL3 for visualization.
